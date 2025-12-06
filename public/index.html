@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Home — Home</title>
+  <link rel="stylesheet" href="styles.css" />
+
+
+</head>
+<body data-current="home">
+  <!-- Navigation (bottom on mobile, top on tablet/desktop) -->
+  <nav class="app-nav">
+    <a href="index.html" class="nav-item" data-page="home">
+      <span class="nav-ico" aria-hidden="true">🏠</span><span class="nav-txt">Home</span>
+    </a>
+    <a href="visitors.html" class="nav-item" data-page="visitors">
+      <span class="nav-ico" aria-hidden="true">👥</span><span class="nav-txt">Visitors</span>
+    </a>
+    <a href="notifications.html" class="nav-item" data-page="notifications">
+      <span class="nav-ico" aria-hidden="true">🔔</span><span class="nav-txt">Notifications</span>
+    </a>
+  </nav>
+
+  <main class="container">
+    <section class="pane pane--home">
+      <header class="hero reveal">
+        <svg viewBox="0 0 400 220" class="hero-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#eaf5ff"/><stop offset="100%" stop-color="#dff2ff"/>
+          </linearGradient></defs>
+          <rect x="0" y="0" width="400" height="220" fill="url(#sky)"/>
+          <circle cx="340" cy="40" r="60" fill="#F8C440"/>
+          <g fill="#fff" opacity="0.9">
+            <ellipse cx="70" cy="60" rx="40" ry="18"/>
+            <ellipse cx="110" cy="70" rx="50" ry="22"/>
+            <ellipse cx="160" cy="60" rx="35" ry="16"/>
+          </g>
+        </svg>
+        <div class="hero-copy">
+          <h1>Welcome<br/>to Smart Home</h1>
+        </div>
+      </header>
+
+      <div class="grid-2">
+        <article class="card stat reveal hover-float">
+          <img class="icon" alt="Temp" src="./Resource/tempreture.svg" />
+          <div class="stat-info">
+            <p class="label">Temperature</p>
+            <p class="value"><span data-temp></span><span class="unit">°C</span></p>
+          </div>
+        </article>
+        <article class="card stat reveal hover-float">
+          <img class="icon" alt="Humidity" src="./Resource/humidity.svg" />
+          <div class="stat-info">
+            <p class="label">Humidity</p>
+            <p class="value"><span data-hum></span><span class="unit">%</span></p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Your SmartHome.svg without any card/frame -->
+      <figure class="svg-stage reveal">
+        <img class="svg-flat" alt="SmartHome" src="./Resource/SmartHome.svg" />
+      </figure>
+    </section>
+  </main>
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="app.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".reveal").forEach(el => {
+      el.classList.add("in-view");
+    });
+  });
+  </script>
+
+</body>
+</html>

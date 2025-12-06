@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Home — Visitors</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+
+  <!-- Bootstrap Datepicker CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
+
+  <!-- Bootstrap Timepicker CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/css/bootstrap-timepicker.min.css">
+
+  <!-- Firebase + Main App -->
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+
+<body data-current="visitors" class="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+
+  <!-- Navigation Bar -->
+  <nav class="app-nav">
+    <a href="index.html" class="nav-item" data-page="home">
+      <span class="nav-ico">🏠</span><span class="nav-txt">Home</span>
+    </a>
+    <a href="visitors.html" class="nav-item is-active" data-page="visitors">
+      <span class="nav-ico">👥</span><span class="nav-txt">Visitors</span>
+    </a>
+    <a href="notifications.html" class="nav-item" data-page="notifications">
+      <span class="nav-ico">🔔</span><span class="nav-txt">Notifications</span>
+    </a>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="container max-w-7xl mx-auto px-4 py-8">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-gray-900 mb-2">Visitors Detected</h1>
+      <p class="text-gray-600">Monitor and filter motion detection </p>
+    </div>
+
+<!-- FILTER PANEL -->
+<div class="mb-3">
+
+  <!-- Mobile Filter Toggle -->
+  <button
+    id="toggle-filters"
+    class="md:hidden flex items-center gap-2 px-3 py-1.5 bg-white rounded-lg shadow-sm transition-all duration-200 border border-gray-200 mb-2"
+  >
+    <i data-lucide="filter" class="w-4 h-4"></i>
+    <span class="font-medium text-sm">Show Filters</span>
+  </button>
+
+  <!-- FILTER PANEL BODY (NO BOX, NO BG, NO SHADOW) -->
+  <div
+    id="filter-panel"
+    class="space-y-2"   
+  >
+
+    <!-- DATE -->
+    <div class="space-y-1">
+      <label class="block text-sm font-medium text-gray-700">
+        <i data-lucide="calendar" class="w-4 h-4 inline mr-1.5"></i>
+        Date
+      </label>
+
+      <input
+        type="text"
+        id="filter-date"
+        class="datepicker form-control w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300"
+        placeholder="Select date"
+      />
+    </div>
+
+    <!-- TIME RANGE -->
+    <div class="space-y-1">
+      <label class="block text-sm font-medium text-gray-700">
+        <i data-lucide="clock" class="w-4 h-4 inline mr-1.5"></i>
+        Time Range
+      </label>
+
+      <div class="grid grid-cols-2 gap-2">
+        <input
+          type="text"
+          id="filter-time-start"
+          class="timepicker form-control w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300"
+          placeholder="From"
+        />
+
+        <input
+          type="text"
+          id="filter-time-end"
+          class="timepicker form-control w-full px-3 py-1.5 text-sm rounded-lg border border-gray-300"
+          placeholder="To"
+        />
+      </div>
+    </div>
+
+    <!-- CLEAR FILTERS BUTTON -->
+    <button
+      id="clear-filters"
+      class="text-sm text-gray-600 hover:text-red-600 flex items-center gap-1 mt-1"
+    >
+      <i data-lucide="x" class="w-4 h-4"></i>
+      Clear all filters
+    </button>
+
+  </div>
+</div>
+
+
+    <!-- VISITOR LIST -->
+    <div id="visit-list" class="visit-list"></div>
+
+  </main>
+
+  <!-- Lucide Init -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      lucide.createIcons();
+
+      const toggleBtn = document.getElementById("toggle-filters");
+      const filterPanel = document.getElementById("filter-panel");
+      let isOpen = true;
+
+      toggleBtn.addEventListener("click", () => {
+        isOpen = !isOpen;
+        filterPanel.classList.toggle("hidden", !isOpen);
+        toggleBtn.querySelector("span").textContent =
+          isOpen ? "Hide Filters" : "Show Filters";
+      });
+    });
+  </script>
+
+  <!-- Bootstrap JS + jQuery for pickers -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Datepicker + Timepicker -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+
+  <!-- Picker Init -->
+  <script>
+    $("#filter-date").datepicker({
+      format: "yyyy-mm-dd",
+      autoclose: true,
+      todayHighlight: true
+    });
+
+    $("#filter-time-start").timepicker({
+      showMeridian: false,
+      minuteStep: 1,
+      defaultTime: false
+    });
+
+    $("#filter-time-end").timepicker({
+      showMeridian: false,
+      minuteStep: 1,
+      defaultTime: false
+    });
+  </script>
+
+</body>
+</html>

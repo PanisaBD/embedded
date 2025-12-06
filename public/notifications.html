@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Home — Notifications</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Load Firebase + app.js as modules -->
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+
+<body data-current="notifications">
+
+  <!-- Navigation -->
+  <nav class="app-nav">
+    <a href="index.html" class="nav-item" data-page="home">
+      <span class="nav-ico" aria-hidden="true">🏠</span><span class="nav-txt">Home</span>
+    </a>
+    <a href="visitors.html" class="nav-item" data-page="visitors">
+      <span class="nav-ico" aria-hidden="true">👥</span><span class="nav-txt">Visitors</span>
+    </a>
+    <a href="notifications.html" class="nav-item" data-page="notifications">
+      <span class="nav-ico" aria-hidden="true">🔔</span><span class="nav-txt">Notifications</span>
+    </a>
+  </nav>
+
+  <!-- Content -->
+  <main class="container">
+    <section class="pane pane--notifications">
+      <h2 class="pane-title reveal">Notifications</h2>
+
+      <!-- JS will dynamically insert notifications here -->
+      <div class="notif-list"></div>
+    </section>
+  </main>
+
+  <!-- Simple reveal effect -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".reveal").forEach(el => {
+        el.classList.add("in-view");
+      });
+    });
+  </script>
+
+</body>
+</html>
